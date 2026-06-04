@@ -25,9 +25,6 @@ function AuthModal({ open, onClose }: propType) {
 
   const router = useRouter();
 
-  // const { data , status} = useSession();
-  // console.log(data , status);
-
   const handleSignUp = async () => {
     setLoading(true);
     try {
@@ -68,8 +65,14 @@ function AuthModal({ open, onClose }: propType) {
       const res = await signIn("credentials", {
         email,
         password,
+        redirect: false,
       });
-      router.push("/");
+      if (res?.error) {
+        setError("Invalid email or password");
+      } else if (res?.ok) {
+        router.push("/");
+        onClose();
+      }
     } catch (error: any) {
       setError(error.response.data.message ?? "Something went wrong");
     } finally {
@@ -78,7 +81,7 @@ function AuthModal({ open, onClose }: propType) {
   };
 
   const handleGoogleLogin = async () => {
-    await signIn("google");
+    await signIn("google", { callbackUrl: "/" });
   };
 
   const handleChangeOtp = (index: number, value: string) => {
