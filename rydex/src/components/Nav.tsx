@@ -118,7 +118,7 @@ function Nav() {
             }}
           />
 
-            {/* DeskTop */}
+          {/* DeskTop */}
           <div className="hidden md:flex items-center gap-10">
             {userData?.role === "partner" ?
               partnerNavItems.map((item) => {
@@ -146,7 +146,7 @@ function Nav() {
                 let href;
                 if (i == "Home") {
                   href = `/`;
-                }else if (i == "About us") {
+                } else if (i == "About us") {
                   href = `/user/about`;
                 } else {
                   href = `/user/${i.toLowerCase()}`;
@@ -254,14 +254,16 @@ function Nav() {
               }
             </div>
 
-            <button
-              className="md:hidden text-white"
-              onClick={() => setMenuOpen((p) => !p)}
-            >
-              {menuOpen ?
-                <X size={26} />
-              : <Menu size={26} />}
-            </button>
+            {userData && (
+              <button
+                className="md:hidden text-white"
+                onClick={() => setMenuOpen((p) => !p)}
+              >
+                {menuOpen ?
+                  <X size={26} />
+                : <Menu size={26} />}
+              </button>
+            )}
           </div>
         </div>
       </motion.div>
